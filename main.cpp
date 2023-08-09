@@ -1,13 +1,16 @@
 // currency convertor
 #include <iostream>
-#include <cstdio> //for getchar
+#include <cstdio>  //for getchar
+//#include <climits> //for character limiting
+#include <limits>
+#include <ios>
 using namespace std;
 
 class Body
 {
 private:
-    int optionInput;
-    int Amount;
+    char optionInput;
+    long Amount;
 
 public:
     void body()
@@ -25,31 +28,39 @@ public:
     };
     int input()
     {
-        fflush(stdin);
         cin >> optionInput;
-        return optionInput;
+        cin.ignore(numeric_limits<streamsize>::max(), '\n'); //sucessfullt cleared all buffer .
+        if (int(optionInput) >= 49 && int(optionInput) <= 53)
+        {
+            return int(optionInput);
+        }
+        else
+        {
+            return 6;
+        }
     };
     void options()
     {
         int c = input();
         switch (c)
         {
-        case 1:
+        case 49: // ascii value of 1
             convert("INR", 0.62);
             break;
-        case 2:
+        case 50: // ascii value of 2
             convert("Pound", 0.0059);
             break;
-        case 3:
+        case 51: // ascii value of 3
             convert("Dollor", 0.0075);
             break;
-        case 4:
+        case 52: // ascii value of 4
             convert("Yen", 1.08);
             break;
-        case 5:
+        case 53: // ascii value of 5
             break;
         default:
             cout << "enter between (1-4)" << endl;
+            // cout << "signal is " << c << endl;
             options();
         }
     };
@@ -59,11 +70,12 @@ public:
         system("clear");
         do
         {
-            cout << "Enter the ammount" << endl;
+            cout << "Enter the Ammount" << endl;
             cin >> ws;
             cin >> Amount;
 
-            cout << "\n"<<Amount<<"NRS = "<< c << " " << Amount * f << endl;
+            cout << "\n"
+                 << Amount << "NRS = " << c << " " << Amount * f << endl;
             cout << "do you want to continue press: y" << endl;
             cin >> ws;
             cin >> a;
